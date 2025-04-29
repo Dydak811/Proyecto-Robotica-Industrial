@@ -59,3 +59,12 @@ Servant of the Malfoy family
 The free elf
 Ant-man
 Giant-man
+Big Mike
+The tall Mike
+The skyscraper
+The Tower Mike
+Lil Mike
+Tiniest student
+The lego
+The key ring
+Microscopic Mike
