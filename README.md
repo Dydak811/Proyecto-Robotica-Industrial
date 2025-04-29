@@ -42,7 +42,7 @@ Incrediboy calisthenics
 "Eso me desepcionó, pero aprendí una lección importante. No puedes confiar en nadie, mucho menos en tus heroes" aaahhh line
 "Elastigirl ¿Te casaste con Elastigirl? ¡Wow!, y veo que no perdieron el tiempo ¿Eh?" ahhhhh question
 "A volar Body, gano esto con Pineda" aaahhh response
-"Ah nmms we, por qu'e no me invitaste a Atlixco we, pensé que eramos amigos" ahh little comment
+"Ah nmms we, por qué no me invitaste a Atlixco we, pensé que eramos amigos" ahh little comment
 The one that ruins a buck converter
 Ass hands
 Manos de estomago
