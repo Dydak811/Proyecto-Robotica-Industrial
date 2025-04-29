@@ -20,6 +20,8 @@ Pineda's bitch
 Pineda's daughter
 The boy that did not qualify to the Electrohack
 The hobbit
+Gimli
+The dwarf
 Lord Farquaad's head
 The Lord Farquaad of the UDLAP
 The one that cried when he couldn't work on the greenhouse project
@@ -43,11 +45,15 @@ Incrediboy calisthenics
 "Ah nmms we, por qu'e no me invitaste a Atlixco we, pensé que eramos amigos" ahh little comment
 The one that ruins a buck converter
 Ass hands
-Mnaos de estomago
+Manos de estomago
+Manos de recto
 Peter Pan (bro never grow up)
+Thinkerbell
+The fairy
 The garden gnome
 The forest protector
 The mythological creature
+The goblin
 Dobby
 Servant of the Malfoy family
 The free elf
