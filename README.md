@@ -57,8 +57,6 @@ controlar al mismo robot, de igual forma vendrá con funciones de cinematica dir
 ### Software requerido:
 - MATLAB (App Designer)
 - RoboDK
-- ROS Noetic (si se usa en simulación)
-
 
 
 ---
@@ -76,9 +74,8 @@ A lo largo de este documento, se describe el proceso de desarrollo de esta herra
 
 ## 🔧 Entorno de Simulación
 
-- **Simulador principal:** Webots, Gazebo, RoboDK (dependiendo del escenario).
-- **Sistema operativo recomendado:** Linux (Ubuntu 20.04) o Windows 10.
-- **Versión de ROS:** ROS Noetic (si aplica).
+- **Simulador principal:** RoboDK
+- **Sistema operativo recomendado:** Windows 11.
 - **Requisitos mínimos de hardware:**
   - 8 GB RAM
   - CPU Intel i5 o superior
