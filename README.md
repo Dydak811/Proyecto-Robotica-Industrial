@@ -133,7 +133,8 @@ Por lo tanto, ningún colaborador es responsable de cualquier daño a tus compon
 ## 📬 Contacto
 
 ¿Tienes dudas o sugerencias?  
-📧 **Correo electrónico:** ejemplo@udlap.mx
+📧 **Miguel Ángel Salazar Soto Mayor:** ejemplo@udlap.mx
+Responde por:
 ```
 
 Forvia´s bitch
