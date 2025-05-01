@@ -113,8 +113,99 @@ roslaunch proyecto_simulacion main.launch
 
 ## 💻 Programación
 
-Aquí se incluye código de ejemplo con explicación de cada parte relevante del proyecto.  
-*(Se recomienda documentar nodos de ROS, scripts en Python/C++ o programación de movimientos en RoboDK/MATLAB.)*
+Estructura General
+
+El código está construido con App Designer y contiene:
+
+Propiedades privadas: Variables internas como RDK, robot, temporizadores y estados de articulaciones.
+
+Funciones de conexión: Se conectan a RoboDK y permiten seleccionar el robot deseado.
+
+Callbacks para sliders y botones: Permiten mover las articulaciones o la herramienta.
+
+Funciones de actualización: Mantienen los displays sincronizados con los movimientos del robot.
+
+Manejo de errores y reconexiones automáticas en caso de interrupción en la comunicación con RoboDK.
+
+Componentes Principales del Programa
+
+1. Conexión a RoboDK
+
+ConnectButtonPushed: Establece la comunicación inicial con RoboDK. Abre la aplicación si está cerrada. Muestra un uialert como confirmación.
+
+SelectRobotButtonPushed: Permite al usuario seleccionar manualmente el robot desde RoboDK.
+
+2. Movimiento Articular
+
+Cada articulación tiene:
+
+Un slider (ValueChangingFcn): Cambia el ángulo en tiempo real.
+
+Un display numérico (EditField): Muestra y permite editar manualmente el valor del ángulo.
+
+Dos botones + y -: Permiten mover en saltos de 5 grados.
+
+updateJointValue(jointIndex, newValue): Funciones centralizada que:
+
+Actualiza el vector de articulaciones.
+
+Mueve el robot.
+
+Actualiza los valores del display y sliders.
+
+Llama a updateToolPoseDisplays() para mantener actualizada la pose cartesiana.
+
+3. Movimiento Cartesiano
+
+Cuatro botones:
+
+Izquierda, Derecha, Arriba, Abajo (+ adelante y atrás opcional)
+
+MoveToolXYZ(dx, dy, dz):
+
+Calcula una nueva matriz de transformación de la herramienta respecto a la base.
+
+Resuelve la cinemática inversa para encontrar nuevos ángulos articulares.
+
+Mueve el robot y actualiza sliders + displays.
+
+4. Campos Editables de Pose
+
+Campos para X, Y, Z, RX, RY, RZ:
+
+Se actualizan con la posición real de la herramienta.
+
+Al modificar manualmente cualquiera de ellos, se recalcula la cinemática inversa y se mueve el robot a esa posición deseada.
+
+5. Home
+
+HomeButton: Mueve el robot a una posición predefinida.
+
+También actualiza los sliders y campos numéricos.
+
+6. Sincronización Visual
+
+Cada movimiento (articular o cartesiano) actualiza:
+
+Sliders
+
+Displays numéricos
+
+Campos de pose cartesiana
+
+updateToolPoseDisplays: Utiliza la función PoseTool() de RoboDK y tr2rpy() para mostrar los valores XYZ y orientaciones RX RY RZ en grados.
+
+Manejo de errores y reconexiones
+
+reconnectIfNeeded:
+
+Si el robot pierde conexión (por ejemplo, RoboDK se cierra o hay un fallo de red), el sistema:
+
+Intenta reconectar hasta un máximo de 3 veces.
+
+Reestablece el objeto robot mediante búsqueda por nombre.
+
+Muestra alertas solo si no se puede recuperar la conexión.
 
 ---
 
