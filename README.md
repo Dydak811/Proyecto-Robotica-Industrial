@@ -112,7 +112,8 @@ roslaunch proyecto_simulacion main.launch
 
 Estructura General
 
-El código está construido con App Designer y contiene:
+El código se construyó utilizando la función "appDesigner" de MATLAB.
+La estructura principal de este código es de interconectar la aplicación de MATLAB con RoboDK y posteriormente reconocer el robot que se haya seleccionado para estudiar o manipular en el programa (de momento está optimizado para trabajar con robots de 6 articulaciones rotacionales y principalmente con el UR5). Para desarrollar este programa se necesitaron declarar las siguientes propiedades y funciones, además de callbacks para interactuar con los botones que aparecen en el teach-pendant:
 
 Propiedades privadas: Variables internas como RDK, robot, temporizadores y estados de articulaciones.
 
@@ -124,85 +125,195 @@ Funciones de actualización: Mantienen los displays sincronizados con los movimi
 
 Manejo de errores y reconexiones automáticas en caso de interrupción en la comunicación con RoboDK.
 
-Componentes Principales del Programa
+El programa, a grandes rasgos puede dividirse en 10 bloques principales que serán descritos a continuación, es necesario mencionar que para que todas estas funciones puedan trabajar correctamente sin interferir entre ellas, fue necesario añadir al programa funciones de inicialización, y métodos que se utilizan dentro de otras funciones para optimizar la extensión del código.
 
 1. Conexión a RoboDK
+La aplicación inicia intentando establecer conexión con RoboDK. Si RoboDK no se está ejecutando, lo lanza desde una ruta conocida y realiza hasta 10 intentos de conexión. Esta lógica garantiza que el usuario no tenga que preocuparse por abrir RoboDK manualmente ni verificar conexión desde fuera de la app.
 
-ConnectButtonPushed: Establece la comunicación inicial con RoboDK. Abre la aplicación si está cerrada. Muestra un uialert como confirmación.
+```bash
+function ConnectButtonPushed(app, event)
+    app.RDK = Robolink;  % Crea una instancia de conexión
+    if ~isempty(app.RDK.getParam('PATH_OPENSTATION'))
+        disp("✅ Conectado a RoboDK exitosamente.");
+    else
+        uialert(app.UIFigure, 'No se pudo conectar a RoboDK.', 'Error de conexión');
+    end
+end
+```
 
-SelectRobotButtonPushed: Permite al usuario seleccionar manualmente el robot desde RoboDK.
+2. Selección del robot
+Una vez establecida la conexión, el usuario puede seleccionar el robot activo en RoboDK mediante un diálogo. La selección se guarda en el objeto app.robot, que se reutiliza en todas las operaciones siguientes. Esto asegura que cualquier acción que involucre movimiento o lectura de posición siempre se aplique al robot correcto.
 
-2. Movimiento Articular
+```bash
+function SelectRobotButtonPushed(app, event)
+    app.robot = app.RDK.ItemUserPick('Select a robot', app.RDK.ITEM_TYPE_ROBOT);
+end
+```
 
-Cada articulación tiene:
+3. Sistema de sliders (Base, Hombro, Codo, M1, M2, M3)
+Cada slider representa una articulación del robot y está vinculado a una función Move, por ejemplo, M1Move para el cuarto eje del UR5. Cuando se manipula un slider, este actualiza una variable PendingJointValue y un índice de articulación. Luego, un temporizador se activa para aplicar el cambio de forma controlada.
 
-Un slider (ValueChangingFcn): Cambia el ángulo en tiempo real.
+Esto evita que RoboDK se sature con movimientos al arrastrar el slider rápidamente. Solo si el valor cambia y persiste por más de medio segundo se aplica el movimiento. Esta técnica mejora el rendimiento y la estabilidad del sistema.
 
-Un display numérico (EditField): Muestra y permite editar manualmente el valor del ángulo.
+```bash
+function BaseMove(app, event)
+            if isempty(app.robot) || app.robot.Valid() == 0
+                uialert(app.UIFigure, 'Select a robot first!', 'Error');
+                return;
+            end
+            startSliderTimer(app, 1, event.Value);
+        end
+```
 
-Dos botones + y -: Permiten mover en saltos de 5 grados.
 
-updateJointValue(jointIndex, newValue): Funciones centralizada que:
+4. Temporizador compartido con autodesactivación
+El temporizador se activa cuando se mueve un slider y ejecuta periódicamente una función que mueve el robot según el valor pendiente. Si detecta que el valor no cambia en 5 ciclos consecutivos (0.5 segundos), se apaga automáticamente.
 
-Actualiza el vector de articulaciones.
+```bash
+function startSliderTimer(app, jointIndex, value)
+    app.PendingJointIndex = jointIndex;
+    app.PendingJointValue = value;
+    app.SliderIdleCounter = 0;
 
-Mueve el robot.
+    if isempty(app.SliderTimer) || ~isvalid(app.SliderTimer)
+        app.SliderTimer = timer(...
+            'ExecutionMode', 'fixedRate', ...
+            'Period', 0.1, ...
+            'TimerFcn', @(~,~) app.applyPendingJointValue());
+        start(app.SliderTimer);
+    end
+end
+```
+y el temporizador se encarga de aplicar ese valor de manera Segura:
 
-Actualiza los valores del display y sliders.
+```bash
+function applyPendingJointValue(app)
+    joints = app.robot.Joints();
+    joints(app.PendingJointIndex) = app.PendingJointValue;
+    app.robot.MoveJ(joints, false);
+    updateToolPoseDisplays(app);
 
-Llama a updateToolPoseDisplays() para mantener actualizada la pose cartesiana.
+    app.SliderIdleCounter = app.SliderIdleCounter + 1;
+    if app.SliderIdleCounter >= 5
+        stop(app.SliderTimer);
+        delete(app.SliderTimer);
+        app.SliderTimer = [];
+    end
+end
+```
 
-3. Movimiento Cartesiano
+Esto es esencial para evitar que los sliders interfieran con otros métodos de control (como botones o campos numéricos) y asegura que el sistema no quede en un estado “bloqueado” esperando una entrada de slider antigua.
 
-Cuatro botones:
+5. Campos numéricos para articulaciones
+Cada articulación también puede ser controlada manualmente por campos de texto (EditField7 a EditField12). Al ingresar un valor, el campo sincroniza su correspondiente slider y actualiza el robot. Esta doble vía de control (slider y campo) mejora la precisión y flexibilidad del usuario.
 
-Izquierda, Derecha, Arriba, Abajo (+ adelante y atrás opcional)
+```bash
+function Display3(app, event)  % Para articulación 3
+    newValue = app.EditField9.Value;
+    app.CodoSlider.Value = newValue;
+    updateJointValue(app, 3, newValue);
+end
+```
 
-MoveToolXYZ(dx, dy, dz):
+6. Botones de desplazamiento cartesiano
+Botones como “Derecha”, “Arriba”, “Adentro”, etc., permiten mover el TCP (herramienta) del robot en coordenadas relativas (XYZ). Internamente, el sistema calcula una nueva matriz de transformación sumando el desplazamiento deseado a la posición actual, y luego resuelve la cinemática inversa para generar una nueva configuración de articulaciones.
 
-Calcula una nueva matriz de transformación de la herramienta respecto a la base.
+Si la solución de IK no es posible, se muestra un mensaje de error. Esto mantiene la operación segura y coherente con los límites del robot.
 
-Resuelve la cinemática inversa para encontrar nuevos ángulos articulares.
+```bash
+function MoveToolXYZ(app, dx, dy, dz)
+    currentPose = app.robot.Pose();
+    newPose = currentPose;
+    newPose(1,4) = currentPose(1,4) + dx;
+    ...
+    newJoints = app.robot.SolveIK(newPose);
+    app.robot.MoveJ(newJoints, false);
+    updateToolPoseDisplays(app);
+end
+```
 
-Mueve el robot y actualiza sliders + displays.
+7. Visualización y actualización de la pose
+La función updateToolPoseDisplays se encarga de mostrar continuamente la posición (X, Y, Z) y la orientación (RX, RY, RZ) del TCP del robot. Toma la matriz de pose actual del robot, la descompone en coordenadas cartesianas y ángulos RPY, y actualiza los campos visuales.
 
-4. Campos Editables de Pose
+Esto asegura que el usuario siempre vea la posición real del robot después de cualquier acción (slider, campo numérico o botón).
 
-Campos para X, Y, Z, RX, RY, RZ:
+```bash
+function updateToolPoseDisplays(app)
+    pose = app.robot.Pose();
+    rpy = tr2rpy(pose(1:3,1:3)) * 180/pi;
+    app.XEditField.Value = pose(1,4);
+    app.RXEditField.Value = rpy(1);
+    ...
+end
+```
 
-Se actualizan con la posición real de la herramienta.
+8. Campos RX, RY, RZ: control de orientación
+Los campos de rotación permiten modificar directamente la orientación de la herramienta. Al cambiar RX, por ejemplo, se mantiene la posición XYZ fija y se actualiza únicamente el ángulo de rotación sobre el eje X. Luego se vuelve a resolver la cinemática inversa para encontrar una configuración de articulaciones que logre esa orientación.
 
-Al modificar manualmente cualquiera de ellos, se recalcula la cinemática inversa y se mueve el robot a esa posición deseada.
+Cada campo incluye validaciones para evitar rotaciones inválidas (e.g., NaN o poses no alcanzables). Si ocurre un error, el valor del campo se revierte para proteger el sistema.
 
-5. Home
+```bash
+function RXEditFieldValueChanged(app, event)
+    rx_new = app.RXEditField.Value;
+    ...
+    R = rpy2r(rx_new*pi/180, ry*pi/180, rz*pi/180);
+    newPose(1:3,1:3) = R;
+    jnts = app.robot.SolveIK(newPose);
+    app.robot.MoveJ(jnts, false);
+end
+```
 
-HomeButton: Mueve el robot a una posición predefinida.
+9. Control de posición absoluta (X, Y, Z)
+Los campos XEditField, YEditField, ZEditField permiten que el usuario defina manualmente la posición absoluta del TCP. La orientación se conserva (extraída del estado actual del robot), y se calcula una nueva matriz de pose.
 
-También actualiza los sliders y campos numéricos.
+A partir de esta matriz, se resuelve IK para encontrar una nueva postura válida. Si no existe una solución, se muestra un error y el campo vuelve al valor anterior. Esto asegura que el robot siempre se mantenga dentro de límites físicos y cinemáticamente posibles.
 
-6. Sincronización Visual
+```bash
+% Obtener la pose actual directamente del robot
+            currentPose = app.robot.Pose();
+    
+            % Extraer la posición y rotación actuales
+            posX = currentPose(1,4);
+            posY = currentPose(2,4);
+            posZ = currentPose(3,4);
+    
+            % Convertir matriz de rotación a ángulos RPY
+            rotm = currentPose(1:3,1:3);
+            rpy = tr2rpy(rotm) * 180/pi;
+            rx = rpy(1);
+            ry = rpy(2);
+            rz = rpy(3);
+    
+            % Usar el valor nuevo ingresado por el usuario solamente para X
+            x = app.XEditField.Value;
+            y = posY; 
+            z = posZ;  
+    
+            % Crear nueva matriz de pose
+            R_full = rpy2r(rx*pi/180, ry*pi/180, rz*pi/180);
+            if size(R_full,1) == 4
+                R = R_full(1:3,1:3);
+            else
+                R = R_full;
+            end
 
-Cada movimiento (articular o cartesiano) actualiza:
+            newPose = eye(4);
+            newPose(1:3,1:3) = R;
+            newPose(1:3,4) = [x; y; z];
+            % Resolver cinemática inversa
+            jnts = app.robot.SolveIK(newPose);
+```
 
-Sliders
+10. Función Home
+El botón "Home" lleva al robot a una posición predefinida segura: [0, -90, -90, 0, 90, 0]. Esta posición inicializa todos los sliders y campos numéricos a valores conocidos, actualiza la visualización de pose y evita partir de una configuración inválida. Es clave para recuperación tras un error o para estandarizar el punto de inicio de operaciones.
 
-Displays numéricos
-
-Campos de pose cartesiana
-
-updateToolPoseDisplays: Utiliza la función PoseTool() de RoboDK y tr2rpy() para mostrar los valores XYZ y orientaciones RX RY RZ en grados.
-
-Manejo de errores y reconexiones
-
-reconnectIfNeeded:
-
-Si el robot pierde conexión (por ejemplo, RoboDK se cierra o hay un fallo de red), el sistema:
-
-Intenta reconectar hasta un máximo de 3 veces.
-
-Reestablece el objeto robot mediante búsqueda por nombre.
-
-Muestra alertas solo si no se puede recuperar la conexión.
+```bash
+function HomePressed(app, event)
+    homePosition = [0, -90, -90, 0, 90, 0];
+    app.robot.MoveJ(homePosition, false);
+    updateToolPoseDisplays(app);
+end
+```
 
 ---
 
