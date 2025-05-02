@@ -88,12 +88,9 @@ A lo largo de este documento, se describe el proceso de desarrollo de esta herra
 Pasos detallados para instalar y configurar el entorno de simulación:
 
 1. Instalar el simulador principal (Webots, Gazebo o RoboDK).
-2. Instalar ROS Noetic (si se usa ROS):
-   ```bash
-   sudo apt update
-   sudo apt install ros-noetic-desktop-full
-   ```
+2. Instalar MATLAB desde paginas oficiales.
 3. Instalar dependencias y librerías necesarias específicas para cada simulador.
+    - Librerias de Robotics ToolBox de Peter Corke 
 
 ---
 
@@ -243,5 +240,5 @@ por lo que muchas acciones en periodos cortos pueden llevar a un "timeout".
 
 ## 👥 Autores del Proyecto
 
-- {Miguel Angel Salazar, Juan Carlos Barba Salce, Hiram Alonso Ramón, Pastrana}
-- {Afiliación o institución: UDLAP}
+- Miguel Angel Salazar, Juan Carlos Barba Salce, Hiram Alonso Ramón, Diego de Jesús Pastrana Blanco
+- Institución: UDLAP
