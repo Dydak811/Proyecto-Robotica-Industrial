@@ -1,4 +1,4 @@
-# {Proyecto: Nombre del Proyecto Simulado}
+# Interfaz de usuario en Matlab que conecta con RoboDK - Teach Pendant
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Maintained](https://img.shields.io/maintenance/yes/2025)
@@ -84,14 +84,16 @@ A lo largo de este documento, se describe el proceso de desarrollo de esta herra
 ---
 
 ## 💾 Instalación de Software
+En este caso, es necesario instalar el software del entonrno de simulación RobodDK, junto con el software de control y manipulación de Matlab. Sin embargo existe un punto a considerar sobre ambos softwares, y es que para poder operarlos libremente sin ninguna restricción, se requiere de una licencia que tiene un costo basntante considerable. Pero por otro lado, es posible obtener versionas gratuitas o de prueba de ambos softwares que permiten manipularlos sin ninguna restricción por un periodo de 30 días. Dichas versionas se pueden descargar a través de los siguientes enlaces.
 
-Pasos detallados para instalar y configurar el entorno de simulación:
+- RoboDK: https://robodk.com/download
+- Matlab: https://la.mathworks.com/campaigns/products/trials.html
 
-1. Instalar el simulador principal (Webots, Gazebo o RoboDK).
-2. Instalar MATLAB desde paginas oficiales.
-3. Instalar dependencias y librerías necesarias específicas para cada simulador.
-    - Librerias de Robotics ToolBox de Peter Corke 
+Tanto en Matlab como en RoboDK al usar una versión de prueba de 30 días, se pueden usar ambos softwares librente; pero al concluir el periodo, ambos programas tendran restricciones en su operación y uso. Por lo que se podrán seguir operando, pero cin muchas otras funciones. Por otro lado, algunas intitcuones permiten obtener Matlab de manera gratuita mediante el uso de un correo electrónico perteneciente a la institución, siempre y cuendo, la institución sic uente con la licencia, por lo que en usos académicos, si es posible obtner Matlab de manera "gratuita".
 
+Ahora, es importante destacar que para la conectividad entre Matlab y RoboDK, es necesario verificar que se hayan instalado los elementos que se describen a continuación. En el caso de RoboDK, es importante ubicar la API de Matlab que generalmente se descarga al momento de descargar RoboDK y s epuede encontrar dentro del explorador de archivos, en la siguiente ruta: C:\RoboDK\Matlab. Para el caso de Matlab, es necesario instalar por lo menos los Toolboxes de: Instrument Control Toolbox, Robotics System Toolbox y Simulink (este último es opcional), ya que estos permiten una mejor comunicación desde Matlab con RoboDK y facilitan el uso de transformaciones y movimientos dentro de RoboDK desde Matlab. 
+
+Por último, es importante añadir que dentro de RoboDK es necesario habilidar un modulo, para permitir el uso de la API. Dentro del software de RoboDK, existen una serie de pestañas en la aprte superior de la interfaz. Se debe ubicar la pestaña de "Tools" y se desplegará un sub-menú, donde en la aprte inferior habrá otra pestaña de "Options". Dentro de la ventana de "Options", de bsucará un recuadro llamado "Other" y al dar click, se abrirá una serie de configuraciones. Dentro de ese apartado, existe un recuadro ubicado del lado izquierdo que lleva de titulo: "RoboDK API", copañado de una leyenda que marca: "Allow External API". Se deberá hacer click dentro del recuadro, luego en el recuadro de OK y finalmente, se podrá cerrar las opciones de Tools. 
 ---
 
 ## 🛠️ Configuración del Proyecto
