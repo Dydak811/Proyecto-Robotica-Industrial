@@ -98,17 +98,28 @@ Por último, es importante añadir que dentro de RoboDK es necesario habilitar u
 ---
 
 ## 🛠️ Configuración del Proyecto
-
-Instrucciones para clonar el repositorio, compilar, lanzar el mundo simulado y ejecutar los nodos o scripts:
-
+El siguiente paso después de instalar el entorno para la ejecución del Teach Pendant para el UR5 es necesario descargar el repositorio del proyecto de la siguiente manera:
 ```bash
-git clone https://github.com/usuario/proyecto-simulacion.git
-cd proyecto-simulacion
-catkin_make
-source devel/setup.bash
-roslaunch proyecto_simulacion main.launch
+git clone https://github.com/usuario/proyecto-Robotica-Industrial.git
+cd proyecto-Robotica-Industrial
 ```
+Ahora, para que el programa pueda detectar correctamente la ubicación del archivo, el programa .mlapp debe de moverse a la carpeta de MATLAB ubicada en el directorio de RoboDK:
+```bash
+C:\RoboDK\Matlab\
+```
+Por consiguiente, dentro de la aplicación de matlab se debe de escribir en la ventana de comandos la instrucción necesaria para añadir de manera automática los scripts de comunicación de RoboDK a la ruta de MATLAB.
+```bash
+cd('C:\RoboDK\Matlab')
+install
+```
+Se debe de recordar habilitar la interfaz de programación externa en RoboDK para evitar posibles fallas de compatibilidad. 
+Finalmente, para conectar una aplicación con la otra con el click del botón interactivo de conexión en el teach pendant, es necesario buscar en el código del archivo .mlapp la sigiente línea de código (se encuentra dentro de la función del botón de conexión):
+```bash
+roboDKPath = 'C:\Program Files\RoboDK\bin\RoboDK.exe';
+```
+y reemplazar la ruta si la instalación del programa RoboDK se encuentra en otra ubicación. Este path se usa para ejecutar RoboDK desde MATLAB en caso de que no esté ya abierto.
 
+A manera de consideración adicional, es recomendable incluir las toolboxes de sistemas robóticos e instrumentación de control y recordar que la conexión entre las aplicaciones depende de una comunicación estable y pausada de los comandos ejecutados en el teach pendant.
 ---
 
 ## 💻 Programación
