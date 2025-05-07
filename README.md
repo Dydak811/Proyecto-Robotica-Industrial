@@ -31,8 +31,8 @@
 ---
 
 ## 📖 Breve Descripción del Proyecto
-{Para este proyecto se desarrollara una interfaz grafica en la plataforma de MatLab la cual tendra la función de enseñar al usuario como manipular el robot UR5 de Universal Robots por medio de una interfaz como si este fuera el Teach Pendant físico de la misma marca. Para esto utilizaremos la función de Design App para poder generar la GUI 
-controlar al mismo robot, de igual forma vendrá con funciones de cinematica directa e inversa para poder generar un movimiento mas dinamico y limpio. Finalmente esta interfaz se podra conectar al software RoboDK para poder mostrar el control del movimiento del UR5.}
+Para este proyecto se desarrollara una interfaz grafica en la plataforma de MatLab la cual tendra la función de enseñar al usuario como manipular el robot UR5 de Universal Robots por medio de una interfaz como si este fuera el Teach Pendant físico de la misma marca. Para esto utilizaremos la función de Design App para poder generar la GUI 
+controlar al mismo robot, de igual forma vendrá con funciones de cinematica directa e inversa para poder generar un movimiento mas dinamico y limpio. Finalmente esta interfaz se podra conectar al software RoboDK para poder mostrar el control del movimiento del UR5.
 
 ---
 
@@ -63,12 +63,12 @@ controlar al mismo robot, de igual forma vendrá con funciones de cinematica dir
 
 ## 📖 Introducción
 
-{En la actualidad, la automatización y la robótica industrial son clave para optimizar procesos en diversos sectores, destacando los robots colaborativos como el UR5 por su precisión, seguridad y facilidad de integración. Sin embargo, su programación aún representa un desafío, ya que suele requerir conocimientos técnicos avanzados y experiencia en lenguajes específicos, lo cual limita su accesibilidad para usuarios sin formación especializada. Aunque los teach pendants tradicionales permiten controlar estos robots, su uso puede resultar poco intuitivo y complejo, especialmente para principiantes o entornos educativos. 
+En la actualidad, la automatización y la robótica industrial son clave para optimizar procesos en diversos sectores, destacando los robots colaborativos como el UR5 por su precisión, seguridad y facilidad de integración. Sin embargo, su programación aún representa un desafío, ya que suele requerir conocimientos técnicos avanzados y experiencia en lenguajes específicos, lo cual limita su accesibilidad para usuarios sin formación especializada. Aunque los teach pendants tradicionales permiten controlar estos robots, su uso puede resultar poco intuitivo y complejo, especialmente para principiantes o entornos educativos. 
 
 
 Con el objetivo de hacer más accesible la interacción con el robot UR5, este proyecto propone el desarrollo de una interfaz gráfica interactiva utilizando MATLAB, apoyándose en su herramienta App Designer. Esta interfaz actúa como un teach pendant virtual, permitiendo al usuario controlar y programar el robot de forma visual, sencilla e intuitiva, sin necesidad de conocimientos avanzados en programación. Además, se establece una conexión con el entorno de simulación RoboDK, lo que posibilita la visualización en tiempo real de los movimientos del robot y la validación de trayectorias sin utilizar hardware físico.
 
-A lo largo de este documento, se describe el proceso de desarrollo de esta herramienta, desde la definición del problema hasta las pruebas realizadas, pasando por el diseño de la interfaz, la integración con RoboDK y las funcionalidades implementadas. Finalmente, se discuten los beneficios, limitaciones y posibles mejoras futuras, destacando el valor de esta solución como herramienta educativa, de prototipado o de apoyo en la enseñanza de robótica industrial.}
+A lo largo de este documento, se describe el proceso de desarrollo de esta herramienta, desde la definición del problema hasta las pruebas realizadas, pasando por el diseño de la interfaz, la integración con RoboDK y las funcionalidades implementadas. Finalmente, se discuten los beneficios, limitaciones y posibles mejoras futuras, destacando el valor de esta solución como herramienta educativa, de prototipado o de apoyo en la enseñanza de robótica industrial.
 
 ---
 
