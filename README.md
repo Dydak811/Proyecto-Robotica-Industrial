@@ -369,3 +369,13 @@ por lo que muchas acciones en periodos cortos pueden llevar a un "timeout".
 
 - Miguel Angel Salazar, Juan Carlos Barba Salce, Hiram Alonso Ramón, Diego de Jesús Pastrana Blanco
 - Institución: UDLAP
+
+---
+## 📬 Contacto
+
+¿Tienes dudas o sugerencias?
+
+- 📧 Correo electrónico: miguel.salazarso@udlap.mx
+- 📧 Correo electrónico: juan.barbase@udlap.mx
+
+---
