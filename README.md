@@ -329,6 +329,8 @@ function HomePressed(app, event)
     updateToolPoseDisplays(app);
 end
 ```
+A continuación, se muestra la interfaz diseñada mediante AppDesigner.
+![Matlab Interface](https://github.com/user-attachments/assets/9dd3581f-96d9-4a1d-8319-2c1e93b69396)
 
 ---
 
