@@ -344,11 +344,11 @@ Nuestra integración, es una muestra de la posibilidad de controlar robots como 
 
 ## 🔜 Mejoras Futuras
 
-- {Hacer el programa más robusto, por ejemplo que pueda responder a instrucciones de manera más veloz sin trabarse en el proceso,
-- Que pueda seguir movimientos de los sliders con más fidelidad,
-- Programar una función que permita obtener las matrices de transformación homogénea de una acción en particular,
+- {Hacer el programa más robusto, por ejemplo que pueda responder a instrucciones de manera más veloz sin trabarse en el proceso.
+- Que pueda seguir movimientos de los sliders con más fidelidad.
+- Programar una función que permita obtener las matrices de transformación homogénea de una acción en particular.
 - Que se puedan guardar los puntos de una trayectoria para generar un programa de python,
-- Hacer la conexión directamente con el robot en físico para que no solo pueda operar el teach-pendant en el RoboDK sino también en el software del robot real,
+- Hacer la conexión directamente con el robot en físico para que no solo pueda operar el teach-pendant en el RoboDK sino también en el software del robot real.
 - Finalmente, extender la posibilidad de usos a más robots adecuando la cantidad de articulaciones para el robot seleccionado que no sea solo un UR5.}
 
 ---
