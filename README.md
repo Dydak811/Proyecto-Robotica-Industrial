@@ -31,8 +31,8 @@
 ---
 
 ## 📖 Breve Descripción del Proyecto
-Para este proyecto se desarrollara una interfaz grafica en la plataforma de MatLab la cual tendra la función de enseñar al usuario como manipular el robot UR5 de Universal Robots por medio de una interfaz como si este fuera el Teach Pendant físico de la misma marca. Para esto utilizaremos la función de Design App para poder generar la GUI 
-controlar al mismo robot, de igual forma vendrá con funciones de cinematica directa e inversa para poder generar un movimiento mas dinamico y limpio. Finalmente esta interfaz se podra conectar al software RoboDK para poder mostrar el control del movimiento del UR5.
+Para este proyecto se desarrollará una interfaz gráfica en la plataforma de MATLAB la cual tendrá la función de enseñar al usuario cómo manipular el robot UR5 de Universal Robots por medio de una interfaz como si este fuera el Teach Pendant físico de la misma marca. Para esto utilizaremos la función de Design App para poder generar la GUI.
+Controlar al mismo robot, de igual forma vendrá con funciones de cinemática directa e inversa para poder generar un movimiento más dinámico y limpio. Finalmente esta interfaz se podrá conectar al software RoboDK para poder mostrar el control del movimiento del UR5.
 
 ---
 
@@ -84,14 +84,24 @@ A lo largo de este documento, se describe el proceso de desarrollo de esta herra
 ---
 
 ## 💾 Instalación de Software
-En este caso, es necesario instalar el software del entorno de simulación RobodDK, junto con el software de control y manipulación de Matlab. Sin embargo existe un punto a considerar sobre ambos softwares, y es que para poder operar libremente sin ninguna restricción, se requiere de una licencia que tiene un costo bastante considerable. Pero por otro lado, es posible obtener versiones gratuitas o de prueba de ambos softwares que permiten manipularlos sin ninguna restricción por un periodo de 30 días. Dichas versiones se pueden descargar a través de los siguientes enlaces.
+En este caso, es necesario instalar el software del entorno de simulación RoboDK, junto con el software de control y manipulación de Matlab. Sin embargo existe un punto a considerar sobre ambos softwares, y es que para poder operar libremente sin ninguna restricción, se requiere de una licencia que tiene un costo considerable. Pero por otro lado, es posible obtener versiones gratuitas o de prueba de ambos softwares que permiten manipularlos sin ninguna restricción por un periodo de 30 días. Dichas versiones se pueden descargar a través de los siguientes enlaces.
 
 - RoboDK: https://robodk.com/download
 - Matlab: https://la.mathworks.com/campaigns/products/trials.html
 
-Tanto en Matlab como en RoboDK al usar una versión de prueba de 30 días, se pueden usar ambos softwares libremente; pero al concluir el periodo, ambos programas tendrán restricciones en su operación y uso. Por lo que se podrán seguir operando, pero sin muchas otras funciones. Por otro lado, algunas instituciones permiten obtener Matlab de manera gratuita mediante el uso de un correo electrónico perteneciente a la institución, siempre y cuando, la institución si cuente con la licencia, por lo que en usos académicos, si es posible obtener Matlab de manera "gratuita".
+Tanto en Matlab como en RoboDK al usar una versión de prueba de 30 días, se pueden usar ambos softwares libremente; pero al concluir el periodo, ambos programas tendrán restricciones en su operación y uso. Por lo que se podrán seguir operando, pero sin muchas otras funciones. Por otro lado, algunas instituciones permiten obtener MATLAB de manera gratuita mediante el uso de un correo electrónico perteneciente a la institución, siempre y cuando, la institución sÍ cuente con la licencia, por lo que en usos académicos, si es posible obtener MATLAB de manera "gratuita".
 
-Ahora, es importante destacar que para la conectividad entre Matlab y RoboDK, es necesario verificar que se hayan instalado los elementos que se describen a continuación. En el caso de RoboDK, es importante ubicar la API de Matlab que generalmente se descarga al momento de descargar RoboDK y s epuede encontrar dentro del explorador de archivos, en la siguiente ruta: C:\RoboDK\Matlab. Para el caso de Matlab, es necesario instalar por lo menos los Toolboxes de: Instrument Control Toolbox, Robotics System Toolbox y Simulink (este último es opcional), ya que estos permiten una mejor comunicación desde Matlab con RoboDK y facilitan el uso de transformaciones y movimientos dentro de RoboDK desde Matlab. 
+---
+
+## 🛠️ Configuración del Proyecto
+
+Ahora, es importante destacar que para la conectividad entre Matlab y RoboDK, es necesario verificar que se hayan instalado los elementos que se describen a continuación. En el caso de RoboDK, es importante ubicar la API de Matlab que generalmente se descarga al momento de descargar RoboDK. 
+Para que el programa pueda detectar correctamente la ubicación del archivo, el programa .mlapp debe de moverse a la carpeta de MATLAB ubicada en el directorio de RoboDK:
+```bash
+C:\RoboDK\Matlab\
+```
+
+Para el caso de Matlab, es necesario instalar por lo menos los Toolboxes de: Instrument Control Toolbox, Robotics System Toolbox y Simulink (este último es opcional), ya que estos permiten una mejor comunicación desde Matlab con RoboDK y facilitan el uso de transformaciones y movimientos dentro de RoboDK desde Matlab. 
 
 ![Matlab folder](https://github.com/user-attachments/assets/7e51db3f-196b-4ef5-91ae-8d7c39decaf8)
 
@@ -99,29 +109,14 @@ Ahora, es importante destacar que para la conectividad entre Matlab y RoboDK, es
 Por último, es importante añadir que dentro de RoboDK es necesario habilitar un módulo, para permitir el uso de la API. Dentro del software de RoboDK, existen una serie de pestañas en la parte superior de la interfaz. Se debe ubicar la pestaña de "Tools" y se desplegará un submenú, donde en la parte inferior habrá otra pestaña de "Options". Dentro de la ventana de "Options", se buscará un recuadro llamado "Other" y al dar click, se abrirá una serie de configuraciones. Dentro de ese apartado, existe un recuadro ubicado del lado izquierdo que lleva de título: "RoboDK API", acompañado de una leyenda que marca: "Allow External API". Se deberá hacer click dentro del recuadro, luego en el recuadro de OK y finalmente, se podrá cerrar las opciones de Tools. 
 ![RoboDK configuration](https://github.com/user-attachments/assets/b781e1e1-07a2-48d6-9ad7-888dc09a0889)
 
----
-
-## 🛠️ Configuración del Proyecto
-El siguiente paso después de instalar el entorno para la ejecución del Teach Pendant para el UR5 es necesario descargar el repositorio del proyecto de la siguiente manera:
-```bash
-git clone https://github.com/usuario/proyecto-Robotica-Industrial.git
-cd proyecto-Robotica-Industrial
-```
-Ahora, para que el programa pueda detectar correctamente la ubicación del archivo, el programa .mlapp debe de moverse a la carpeta de MATLAB ubicada en el directorio de RoboDK:
-```bash
-C:\RoboDK\Matlab\
-```
-Por consiguiente, dentro de la aplicación de matlab se debe de escribir en la ventana de comandos la instrucción necesaria para añadir de manera automática los scripts de comunicación de RoboDK a la ruta de MATLAB.
-```bash
-cd('C:\RoboDK\Matlab')
-install
-```
 Se debe de recordar habilitar la interfaz de programación externa en RoboDK para evitar posibles fallas de compatibilidad. 
 Finalmente, para conectar una aplicación con la otra con el click del botón interactivo de conexión en el teach pendant, es necesario buscar en el código del archivo .mlapp la sigiente línea de código (se encuentra dentro de la función del botón de conexión):
 ```bash
 roboDKPath = 'C:\Program Files\RoboDK\bin\RoboDK.exe';
 ```
 y reemplazar la ruta si la instalación del programa RoboDK se encuentra en otra ubicación. Este path se usa para ejecutar RoboDK desde MATLAB en caso de que no esté ya abierto.
+
+AQUÍ VA LA FOTO!!!
 
 A manera de consideración adicional, es recomendable incluir las toolboxes de sistemas robóticos e instrumentación de control y recordar que la conexión entre las aplicaciones depende de una comunicación estable y pausada de los comandos ejecutados en el teach pendant.
 ---
