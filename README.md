@@ -116,7 +116,7 @@ roboDKPath = 'C:\Program Files\RoboDK\bin\RoboDK.exe';
 ```
 y reemplazar la ruta si la instalación del programa RoboDK se encuentra en otra ubicación. Este path se usa para ejecutar RoboDK desde MATLAB en caso de que no esté ya abierto.
 
-AQUÍ VA LA FOTO!!!
+![MatlabCode](https://github.com/user-attachments/assets/de123060-cb64-45ae-b51d-3a13fc7f5cbf)
 
 A manera de consideración adicional, es recomendable incluir las toolboxes de sistemas robóticos e instrumentación de control y recordar que la conexión entre las aplicaciones depende de una comunicación estable y pausada de los comandos ejecutados en el teach pendant.
 ---
