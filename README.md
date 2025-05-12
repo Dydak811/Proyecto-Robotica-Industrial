@@ -330,7 +330,8 @@ end
 A continuación, se muestra la interfaz diseñada mediante AppDesigner.
 ![Matlab Interface](https://github.com/user-attachments/assets/9dd3581f-96d9-4a1d-8319-2c1e93b69396)
 
-![Teach Pendant](https://github.com/user-attachments/assets/ff7a2635-7803-4715-895c-972186872465)
+![Teach Pendant](https://github.com/user-attachments/assets/e1be2224-be1f-43bc-923e-7c9dcc51e5e2)
+
 ---
 
 ## ✅ Conclusión
